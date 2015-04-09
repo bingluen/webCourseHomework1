@@ -78,7 +78,7 @@ window.requestAnimFrame = (function(callback) {
 
 function init(canvas, ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    score = 0;
     bound = {
         'top': box['pos']['y'] + box['thickness'] / 2,
         'bottom': box['pos']['y'] + canvas.height - box['thickness'] / 2,
