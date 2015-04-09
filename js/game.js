@@ -16,6 +16,10 @@ $(document).ready(function() {
 function gameStart() {
     init(canvas, ctx);
     deadFlag = false;
+    $('#score').html(score);
+    $('#button').html('Restart');
+    $('#messages-e').html('');
+
     //listen to keyboard
     $(document).keydown(function(event) {
         switch (event.keyCode) {
@@ -47,8 +51,20 @@ function gameStart() {
         var startTime = (new Date()).getTime();
         animate(ball, canvas, ctx, startTime);
     }, 1000);
+
+    setTimeout(function() {
+        clearMessages();
+    }, 1000);
+    
 }
 
+function clearMessages()
+{
+    $('#messages').html('');
+    setTimeout(function() {
+        clearMessages();
+    }, 1000);
+}
 
 var box = {
     'pos': {
@@ -171,7 +187,7 @@ function animate(graph, canvas, context, startTime) {
         $('#score').html(score);
     } else if ((graph['pos']['y'] - graph['r'] + graph['speed']['y']) >= bound['bottom'] && (graph['pos']['x'] + graph['r'] < board['pos'] || graph['pos']['x'] - graph['r'] > board['pos'] + board['width'])) {
         deadFlag = true;
-        $('#messages').html('<div class="alert alert-danger" role="alert">Game Over</div>')
+        $('#messages-e').html('<div class="alert alert-danger" role="alert">Game Over</div>')
     }
 
 
