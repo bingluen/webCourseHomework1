@@ -21,11 +21,13 @@ function gameStart() {
         switch (event.keyCode) {
             case 39:
                 moveBoard(board['speed']);
-                board['speed'] = board['speed'] + 1;
+                if(board['speed'] < 100)
+                    board['speed'] = board['speed'] + 1;
                 break;
             case 37:
                 moveBoard(-board['speed']);
-                board['speed'] = board['speed'] + 1;
+                if(board['speed'] < 100)
+                    board['speed'] = board['speed'] + 1;
                 break;
         }
     });
@@ -33,10 +35,10 @@ function gameStart() {
     $(document).keyup(function(event) {
         switch (event.keyCode) {
             case 39:
-                board['speed'] = 5;
+                board['speed'] = 15;
                     break;
             case 37:
-                board['speed'] = 5;
+                board['speed'] = 15;
                 break;
         }
     });
@@ -88,7 +90,7 @@ function init(canvas, ctx) {
         'width': 150,
         'thickness': 5,
         'pos': bound['left'],
-        'speed': 5,
+        'speed': 15,
         'color': '#7F7'
     };
 
@@ -162,8 +164,8 @@ function animate(graph, canvas, context, startTime) {
 
     if ((graph['pos']['y'] - graph['r'] + graph['speed']['y']) <= bound['top']) {
         graph['speed']['y'] *= -1;
-    } else if ((graph['pos']['y'] + graph['r'] + graph['speed']['y']) >= bound['bottom'] && (graph['pos']['x'] + graph['r'] >= board['pos'] && graph['pos']['x'] - graph['r'] <= board['pos'] + board['width'])) {
-        graph['speed']['y'] *= -1;
+    } else if ((graph['pos']['y'] + graph['r']) >= bound['bottom'] && (graph['pos']['x'] + graph['r'] >= board['pos'] && graph['pos']['x'] - graph['r'] <= board['pos'] + board['width'])) {
+        graph['speed']['y'] = Math.abs(graph['speed']['y']) * -1;
         $('#messages').html('<div class="alert alert-info" role="alert">Get 10 point</div>')
         score += 10;
         $('#score').html(score);
